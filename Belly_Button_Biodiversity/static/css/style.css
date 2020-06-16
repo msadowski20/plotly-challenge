@@ -1,0 +1,25 @@
+.jumbotron {
+    background-color: rgb(51, 115, 167);
+    color: white;
+    border-style: double;
+    border-color: white;
+}
+
+.well {
+    background-color: rgb(51, 115, 167);
+    color: white;
+    border-style: double;
+    border-color: white;
+}
+
+#selDataset {
+    color: rgb(51, 115, 167);
+    font-size: medium;
+    font-weight: 600;
+}
+
+.panel-body {
+    color: rgb(51, 115, 167);
+    font-size: medium;
+    font-weight: 600;
+}

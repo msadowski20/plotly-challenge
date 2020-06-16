@@ -2,13 +2,11 @@
 function buildPlots(id) {
     d3.json("data/samples.json").then((data) => {
 
-        // var wfreq = data.metadata.map(m => m.wfreq);
-        var metadata = data.metadata.filter(m => m.id.toString() === id)[0];
-        var wfreq = metadata.wfreq;
+        var wfreq = data.metadata.map(d => d.wfreq)[0];
         var samples = data.samples.filter(s => s.id.toString() === id)[0];
         var sampleData = samples.sample_values.slice(0, 10).reverse();
-        var otuData = (samples.otu_ids.slice(0, 10)).reverse();
-        var otuID = otuData.map(d => `OTU ${d}`);
+        var toptenOTU = (samples.otu_ids.slice(0, 10)).reverse();
+        var otuID = toptenOTU.map(d => `OTU ${d}`);
         var labels = samples.otu_labels.slice(0, 10);
 
         // Create Bar Chart
@@ -73,10 +71,7 @@ function buildPlots(id) {
             },
             value: parseInt(wfreq),
             title: {
-                text: `Weekly Washing Frequency`,
-                font: {
-                    size: 40
-                 }
+                text: `Weekly Washing Frequency `
             },
             type: "indicator",
 
@@ -85,33 +80,30 @@ function buildPlots(id) {
                 axis: {
                     range: [null, 9]
                 },
-                bar: {
-                    color: "rgb(51, 115, 167)"
-                },
                 steps: [{
-                    range: [0, 2],
-                    color: "white"
-                },
-                {
-                    range: [2, 4],
-                    color: "white"
-                },
-                {
-                    range: [4, 6],
-                    color: "white"
-                },
-                {
-                    range: [6, 8],
-                    color: "white"
-                },
-                {
-                    range: [8, 10],
-                    color: "white"
-                },
+                        range: [0, 2],
+                        color: "yellow"
+                    },
+                    {
+                        range: [2, 4],
+                        color: "orange"
+                    },
+                    {
+                        range: [4, 6],
+                        color: "red"
+                    },
+                    {
+                        range: [6, 8],
+                        color: "lime"
+                    },
+                    {
+                        range: [8, 10],
+                        color: "green"
+                    },
                 ]
             }
-        }];
 
+        }];
         var layoutGauge = {
             width: 600,
             height: 500,
@@ -120,14 +112,8 @@ function buildPlots(id) {
                 b: 20,
                 l: 50,
                 r: 50
-            },
-            paper_bgcolor: "rgb(51, 115, 167)",
-            font: {
-                color: "white",
-                size: 20
             }
         };
-
         Plotly.newPlot("gauge", dataGauge, layoutGauge);
     });
 }
@@ -158,10 +144,10 @@ function updatePlots(id) {
 function init() {
     d3.json("data/samples.json").then((data) => {
 
-        var dropdownMenu = d3.select("#selDataset");
+        var dropdown = d3.select("#selDataset");
 
         data.names.forEach(function (name) {
-            dropdownMenu.append("option").text(name).property("value");
+            dropdown.append("option").text(name).property("value");
         });
 
         buildPlots(data.names[0]);
