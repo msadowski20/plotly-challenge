@@ -1,11 +1,11 @@
 // Function to build all plots
-function buildPlots(id) {
+function buildPlots(subject) {
     d3.json("data/samples.json").then((data) => {
 
         // var wfreq = data.metadata.map(m => m.wfreq);
-        var metadata = data.metadata.filter(m => m.id.toString() === id)[0];
+        var metadata = data.metadata.filter(m => m.id.toString() === subject)[0];
         var wfreq = metadata.wfreq;
-        var samples = data.samples.filter(s => s.id.toString() === id)[0];
+        var samples = data.samples.filter(s => s.id.toString() === subject)[0];
         var sampleData = samples.sample_values.slice(0, 10).reverse();
         var otuData = (samples.otu_ids.slice(0, 10)).reverse();
         var otuID = otuData.map(d => `OTU ${d}`);
@@ -133,11 +133,11 @@ function buildPlots(id) {
 }
 
 // Function to get the demographic info
-function getDemographicInfo(id) {
+function getDemographicInfo(subject) {
     d3.json("data/samples.json").then((data) => {
 
         var metadata = data.metadata;
-        var demographicData = metadata.filter(m => m.id.toString() === id)[0];
+        var demographicData = metadata.filter(m => m.id.toString() === subject)[0];
         var metadataPanel = d3.select("#sample-metadata");
 
         metadataPanel.html("");
@@ -149,9 +149,9 @@ function getDemographicInfo(id) {
 }
 
 // Functin to update plots on change
-function updatePlots(id) {
-    buildPlots(id);
-    getDemographicInfo(id);
+function updatePlots(subject) {
+    buildPlots(subject);
+    getDemographicInfo(subject);
 }
 
 // Function to initialize the page data
